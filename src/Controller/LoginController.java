@@ -28,7 +28,7 @@ public class LoginController {
     @FXML
     void fazerLogin(ActionEvent event) {
         Validacoes email = new Validacoes();
-        Alertas alertaConfirmacao = new Alertas();
+        Alertas alerta = new Alertas();
         String email_valido = emailDoLogin.getText();
         String senha = senhaDoLogin.getText();
         boolean isValidEmail = email.validarEmail(email_valido);
@@ -43,15 +43,15 @@ public class LoginController {
 
                 stmt.executeUpdate();
 
-                alertaConfirmacao.mostrarConfirmacao();
+                alerta.mostrarConfirmacao();
             } catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Erro ao acessar o banco: " + e);
+                alerta.mostrarErro();
+                System.out.println(e);
             }finally {
                 ConexaoComBanco.fechaConexao(conexao, stmt);
             }
         }else{
-            JOptionPane.showMessageDialog(null, "email, não é válido! tente novamente!");
-
+            alerta.mostrarErro("Email inválido, tente novamente!");
         }
 
 

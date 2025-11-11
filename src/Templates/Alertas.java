@@ -11,4 +11,20 @@ public class Alertas {
         alert.setContentText("Login realizado com sucesso");
         alert.showAndWait();
     }
+
+    public void mostrarErro(){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro no banco de dados");
+        alert.setHeaderText("Esse erro ocorreu na execução");
+        alert.setContentText("Erro");
+        alert.showAndWait();
+    }
+
+    public void mostrarErro(String erro){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Erro no email");
+        alert.setHeaderText("Erro de digitação, por favor, repita!");
+        alert.setContentText(erro);
+        alert.showAndWait();
+    }
 }
