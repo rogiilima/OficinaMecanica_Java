@@ -15,7 +15,7 @@ public class Alertas {
     public void mostrarErro(){
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Erro no banco de dados");
-        alert.setHeaderText("Esse erro ocorreu na execução");
+        alert.setHeaderText("Esse erro ocorreu na execução do banco de dados");
         alert.setContentText("Erro");
         alert.showAndWait();
     }

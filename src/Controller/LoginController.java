@@ -1,6 +1,7 @@
 package Controller;
 
 import DB.ConexaoComBanco;
+import Model.Validacoes;
 import Templates.Alertas;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,9 +9,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -37,14 +38,22 @@ public class LoginController {
         PreparedStatement stmt = null;
         if (isValidEmail) {
             try {
-                stmt = conexao.prepareStatement("SELECT * FROM administrador WHERE email = ? AND senha = ? "); // previne de SQL injection
+                stmt = conexao.prepareStatement("SELECT * FROM administrador WHERE email = ? AND senha = ?"); // previne de SQL injection
                 stmt.setString(1, email_valido);
                 stmt.setString(2, senha);
 
-                stmt.executeUpdate();
+                // Query pode ser usado para select, Update para inserir, update e delete
+                // e execute, é para todos
+                // ResultSet, compara um resultado da query, e atribui a execução da query
+                ResultSet resultadoDaQuery = stmt.executeQuery();
 
-                alerta.mostrarConfirmacao();
-            } catch (SQLException e) {
+                if (resultadoDaQuery.next()){
+                    alerta.mostrarConfirmacao();
+                }
+                else {
+                    alerta.mostrarErro("Erro de digitação, tente novamente!");
+                }
+                } catch (SQLException e) {
                 alerta.mostrarErro();
                 System.out.println(e);
             }finally {
