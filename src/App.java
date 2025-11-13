@@ -15,7 +15,7 @@ public class App extends Application {
         Parent root = fxmlLoader.load();
         Scene tela = new Scene(root);
 
-        primaryStage.setTitle("Tela de login");
+        primaryStage.setTitle("Sistema de Oficina Mecânica");
         primaryStage.setFullScreen(true);
         primaryStage.setScene(tela);
         primaryStage.show();

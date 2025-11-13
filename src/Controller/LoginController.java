@@ -1,6 +1,8 @@
 package Controller;
 
 import DB.ConexaoComBanco;
+import Model.Administrador;
+import Model.MudarTela;
 import Model.Validacoes;
 import Templates.Alertas;
 import javafx.event.ActionEvent;
@@ -9,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,38 +25,42 @@ public class LoginController {
 
         @FXML
         private TextField emailDoLogin;
-
         @FXML
         private PasswordField senhaDoLogin;
+
+        private Administrador administrador;
 
     @FXML
     void fazerLogin(ActionEvent event) {
         Validacoes email = new Validacoes();
         Alertas alerta = new Alertas();
-        String email_valido = emailDoLogin.getText();
-        String senha = senhaDoLogin.getText();
-        boolean isValidEmail = email.validarEmail(email_valido);
+
+        // usando a instância criada e passando os textos como parâmetros, conseguindo usar o MODEL, junto com o controller
+        administrador = new Administrador(emailDoLogin.getText(), senhaDoLogin.getText());
+
+        boolean isValidEmail = email.validarEmail(administrador.getEmail());
 
         Connection conexao = ConexaoComBanco.getConnection();
         PreparedStatement stmt = null;
         if (isValidEmail) {
             try {
                 stmt = conexao.prepareStatement("SELECT * FROM administrador WHERE email = ? AND senha = ?"); // previne de SQL injection
-                stmt.setString(1, email_valido);
-                stmt.setString(2, senha);
+                stmt.setString(1, administrador.getEmail());
+                stmt.setString(2, administrador.getSenha());
 
                 // Query pode ser usado para select, Update para inserir, update e delete
                 // e execute, é para todos
-                // ResultSet, compara um resultado da query, e atribui a execução da query
+                // ResultSet, verifica o resultado da query, e atribui a execução da query
                 ResultSet resultadoDaQuery = stmt.executeQuery();
 
                 if (resultadoDaQuery.next()){
                     alerta.mostrarConfirmacao();
+                MudarTela.trocarJanela(event, "/View/PainelAdministrativo.fxml");
                 }
                 else {
-                    alerta.mostrarErro("Erro de digitação, tente novamente!");
+                    alerta.mostrarErro("Erro, email ou senha inválido, tente novamente!");
                 }
-                } catch (SQLException e) {
+                } catch (SQLException | IOException e) {
                 alerta.mostrarErro();
                 System.out.println(e);
             }finally {
