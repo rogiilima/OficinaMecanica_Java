@@ -47,7 +47,7 @@ public class ConexaoComBanco {
     // uso de sobrecarga para tratar os diversos tipos de fechamentos
     public static void fechaConexao(Connection connection, PreparedStatement ps, ResultSet rs){
 
-        fechaConexao(connection, ps);
+        fechaConexao(connection, ps, rs);
         try{
             if (rs != null){
                 rs.close();

@@ -42,6 +42,7 @@ public class LoginController {
 
         Connection conexao = ConexaoComBanco.getConnection();
         PreparedStatement stmt = null;
+        ResultSet resultadoDaQuery = null;
         if (isValidEmail) {
             try {
                 stmt = conexao.prepareStatement("SELECT * FROM administrador WHERE email = ? AND senha = ?"); // previne de SQL injection
@@ -51,7 +52,7 @@ public class LoginController {
                 // Query pode ser usado para select, Update para inserir, update e delete
                 // e execute, é para todos
                 // ResultSet, verifica o resultado da query, e atribui a execução da query
-                ResultSet resultadoDaQuery = stmt.executeQuery();
+                resultadoDaQuery = stmt.executeQuery();
 
                 if (resultadoDaQuery.next()){
                     alerta.mostrarConfirmacao();
@@ -64,7 +65,7 @@ public class LoginController {
                 alerta.mostrarErro();
                 System.out.println(e);
             }finally {
-                ConexaoComBanco.fechaConexao(conexao, stmt);
+                ConexaoComBanco.fechaConexao(conexao, stmt, resultadoDaQuery);
             }
         }else{
             alerta.mostrarErro("Email inválido, tente novamente!");

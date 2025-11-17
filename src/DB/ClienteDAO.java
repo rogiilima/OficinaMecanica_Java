@@ -9,7 +9,7 @@ import java.sql.SQLException;
 public class ClienteDAO {
 
     // função testada funcionando normalmente
-    public static void adicionarCliente (){
+    public static void adicionarCliente (String nome, String cpf, String telefone){
 
         Connection conexao = ConexaoComBanco.getConnection();
 
@@ -17,11 +17,12 @@ public class ClienteDAO {
 
         try {
             stmt = conexao.prepareStatement("INSERT INTO cliente (nome_cliente, cpf_cliente, telefone) VALUES (?,?,?)");
-            stmt.setString(1, "lucas");
-            stmt.setString(2, "111.234.343-54");
-            stmt.setString(3, "(89) 90434-2311");
+            stmt.setString(1, nome);
+            stmt.setString(2, cpf);
+            stmt.setString(3, telefone);
 
             stmt.executeUpdate();
+
         } catch (SQLException e) {
         System.out.println("Erro no banco de dados" + e);
         }
@@ -29,6 +30,5 @@ public class ClienteDAO {
     }
 
     public static void main(String[] args) {
-        adicionarCliente();
     }
 }
