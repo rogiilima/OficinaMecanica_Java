@@ -31,11 +31,6 @@ public class ClienteDAO {
         }
 
     }
-
-    public static void mostrarClientes(){
-
-    }
-
     public static boolean deletarCliente(String id){
         Connection conexao = ConexaoComBanco.getConnection();
         PreparedStatement stmt = null;
@@ -83,11 +78,25 @@ public class ClienteDAO {
         return listaClientes;
     }
 
-    public static void updadeClientes(){
-
+    public static void main(String[] args) {
     }
 
-
-    public static void main(String[] args) {
+    public static boolean atualizarCliente(String idCliente, String nome, String cpfLimpo, String telefoneLimpo, boolean b) {
+        Connection conexao = ConexaoComBanco.getConnection();
+        PreparedStatement stmt = null;
+        try {
+            stmt = conexao.prepareStatement("UPDATE cliente SET nome_cliente = ?, cpf_cliente = ?, telefone = ? WHERE id_cliente = ?");
+            stmt.setString(1, nome);
+            stmt.setString(2, cpfLimpo);
+            stmt.setString(3, telefoneLimpo);
+            stmt.setString(4, idCliente);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            System.out.println("Erro no banco de dados: " + e);
+            return false;
+        } finally {
+            ConexaoComBanco.fechaConexao(conexao, stmt);
+        }
     }
 }

@@ -54,11 +54,11 @@ public class MudarClientesController {
             return;
         }
 
-        // Remover formatação
+
         String cpfLimpo = cpf.replaceAll("\\D+", "");
         String telefoneLimpo = telefone.replaceAll("\\D+", "");
 
-        // Atualizar no banco
+
         boolean sucesso = ClienteDAO.atualizarCliente(idCliente, nome, cpfLimpo, telefoneLimpo, false);
 
         if (sucesso) {
