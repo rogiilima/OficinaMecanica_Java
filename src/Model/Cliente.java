@@ -1,12 +1,26 @@
 package Model;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
 public class Cliente {
+    private SimpleStringProperty id;
     private SimpleStringProperty nome;
     private SimpleStringProperty cpf;
     private SimpleStringProperty idade;
     private SimpleStringProperty telefone;
+    private SimpleBooleanProperty isVip;
+
+
+
+    public SimpleStringProperty getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id.set(id);
+    }
 
     public SimpleStringProperty getNome() {
         return nome;
