@@ -81,7 +81,7 @@ public class CriarOrdemServicoController {
 
     @FXML
     void voltar(ActionEvent event) throws IOException {
-        MudarTela.trocarJanela(event, "/View/HistoricoVeiculo.fxml");
+        MudarTela.trocarJanela(event, "/View/PainelOrdensServico.fxml");
     }
 
 }

@@ -4,10 +4,7 @@ import Model.OrdemDeServico;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.DecimalFormat;
 
 public class OrdemServicoDAO {
@@ -161,6 +158,41 @@ public class OrdemServicoDAO {
         }
 
         return listaOrdens;
+    }
+
+    // cria ordem e vai retornar um id gerado
+    public static int criarOrdem(String idVeiculo, String descricao, double valorMaoObra, String status) {
+        Connection conexao = ConexaoComBanco.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        int idOrdemGerado = -1;
+
+        try {
+            stmt = conexao.prepareStatement(
+                    "INSERT INTO ordem_servico (id_veiculo, descricao, valor_mao_obra, status) VALUES (?,?,?,?)",
+                    Statement.RETURN_GENERATED_KEYS
+            );
+            stmt.setInt(1, Integer.parseInt(idVeiculo));
+            stmt.setString(2, descricao);
+            stmt.setDouble(3, valorMaoObra);
+            stmt.setString(4, status);
+
+            int linhasAfetadas = stmt.executeUpdate();
+
+            if (linhasAfetadas > 0) {
+                rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                    idOrdemGerado = rs.getInt(1);
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao criar ordem: " + e.getMessage());
+        } finally {
+            ConexaoComBanco.fechaConexao(conexao, stmt, rs);
+        }
+
+        return idOrdemGerado;
     }
 
 

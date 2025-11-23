@@ -18,7 +18,6 @@ public class Cliente {
         this.isVip = new SimpleBooleanProperty(isVip);
     }
 
-    // Construtor sem ID (para novos clientes)
     public Cliente(String nome, String cpf, String telefone, boolean isVip) {
         this.id = new SimpleStringProperty("");
         this.nome = new SimpleStringProperty(nome);
@@ -35,7 +34,6 @@ public class Cliente {
         this.isVip = new SimpleBooleanProperty(false);
     }
 
-    // Getters para as Properties (para TableView)
     public SimpleStringProperty idProperty() {
         return id;
     }
@@ -56,7 +54,6 @@ public class Cliente {
         return isVip;
     }
 
-    // Getters e Setters normais
     public String getId() {
         return id.get();
     }
@@ -97,15 +94,4 @@ public class Cliente {
         isVip.set(vip);
     }
 
-    public boolean isVip() {
-        return vip;
-    }
-
-    public void setVip(boolean vip) {
-        this.vip = vip;
-    }
-
-    public int getId() {
-        return id;
-    }
 }
