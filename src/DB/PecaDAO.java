@@ -76,11 +76,44 @@ public class PecaDAO {
     }
 
     public static boolean adicionarPeca(String nome, double preco, int quantidade) {
-    return true;
+        Connection conexao = ConexaoComBanco.getConnection();
+        PreparedStatement stmt = null;
+        try {
+            stmt = conexao.prepareStatement(
+                "INSERT INTO peca (nome_peca, preco_unitario, quantidade_estoque) VALUES (?,?,?)"
+            );
+            stmt.setString(1, nome);
+            stmt.setDouble(2, preco);
+            stmt.setInt(3, quantidade);
+
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao adicionar peça: " + e.getMessage());
+            return false;
+        } finally {
+            ConexaoComBanco.fechaConexao(conexao, stmt);
+        }
     }
 
     public static boolean deletarPeca(String id){
-        return true;
+        Connection conexao = ConexaoComBanco.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conexao.prepareStatement("DELETE FROM peca WHERE id_peca=?");
+            stmt.setInt(1, Integer.parseInt(id));
+
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao deletar peça: " + e.getMessage());
+            return false;
+        } finally {
+            ConexaoComBanco.fechaConexao(conexao, stmt);
+        }
     }
 
     public static double calcularValorTotalEstoque() {
