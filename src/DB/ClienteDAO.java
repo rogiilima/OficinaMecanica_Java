@@ -78,9 +78,6 @@ public class ClienteDAO {
         return listaClientes;
     }
 
-    public static void main(String[] args) {
-    }
-
     public static boolean atualizarCliente(String idCliente, String nome, String cpfLimpo, String telefoneLimpo, boolean b) {
         Connection conexao = ConexaoComBanco.getConnection();
         PreparedStatement stmt = null;

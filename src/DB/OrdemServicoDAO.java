@@ -195,6 +195,30 @@ public class OrdemServicoDAO {
         return idOrdemGerado;
     }
 
+    public static boolean adicionarPecaNaOrdem(int idOrdem, String idPeca, int quantidade, double precoUnitario) {
+        Connection conexao = ConexaoComBanco.getConnection();
+        PreparedStatement stmt = null;
+
+        try {
+            stmt = conexao.prepareStatement(
+                    "INSERT INTO ordem_peca (id_ordem, id_peca, quantidade, preco_unitario) VALUES (?,?,?,?)"
+            );
+            stmt.setInt(1, idOrdem);
+            stmt.setInt(2, Integer.parseInt(idPeca));
+            stmt.setInt(3, quantidade);
+            stmt.setDouble(4, precoUnitario);
+
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0;
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao adicionar peça na ordem: " + e.getMessage());
+            return false;
+        } finally {
+            ConexaoComBanco.fechaConexao(conexao, stmt);
+        }
+    }
+
 
 }
 
