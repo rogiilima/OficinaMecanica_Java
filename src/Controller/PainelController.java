@@ -111,8 +111,8 @@ public class PainelController implements Initializable {
     }
 
     @FXML
-    void irParaOrdem(ActionEvent event) {
-
+    void irParaOrdem(ActionEvent event) throws IOException {
+    MudarTela.trocarJanela(event,"/View/PainelOrdensServico.fxml" );
     }
 
     @FXML

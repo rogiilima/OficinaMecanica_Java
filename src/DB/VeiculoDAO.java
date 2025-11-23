@@ -159,30 +159,6 @@ public class VeiculoDAO {
         }
     }
 
-    // Verificar se placa já existe
-    public static boolean placaExiste(String placa) {
-        Connection conexao = ConexaoComBanco.getConnection();
-        PreparedStatement stmt = null;
-        ResultSet rs = null;
-
-        try {
-            stmt = conexao.prepareStatement("SELECT COUNT(*) FROM `veiculo` WHERE placa = ?");
-            stmt.setString(1, placa);
-            rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                return rs.getInt(1) > 0;
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Erro ao verificar placa: " + e.getMessage());
-        } finally {
-            ConexaoComBanco.fechaConexao(conexao, stmt, rs);
-        }
-
-        return false;
-    }
-
     // Listar veículos de um cliente específico
     public static ObservableList<Veiculo> listarVeiculosPorCliente(String idCliente) {
         ObservableList<Veiculo> listaVeiculos = FXCollections.observableArrayList();
