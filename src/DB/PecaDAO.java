@@ -82,4 +82,63 @@ public class PecaDAO {
     public static boolean deletarPeca(String id){
         return true;
     }
+
+    public static double calcularValorTotalEstoque() {
+        Connection conexao = ConexaoComBanco.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        double total = 0;
+
+        try {
+            stmt = conexao.prepareStatement(
+                    "SELECT SUM(preco_unitario * quantidade_estoque) as total FROM peca"
+            );
+            rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                total = rs.getDouble("total");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao calcular valor do estoque: " + e.getMessage());
+        } finally {
+            ConexaoComBanco.fechaConexao(conexao, stmt, rs);
+        }
+
+        return total;
+    }
+
+    // Listar peças com estoque baixo (menos de 10 unidades)
+    public static ObservableList<Peca> listarEstoqueBaixo() {
+        ObservableList<Peca> listaPecas = FXCollections.observableArrayList();
+        Connection conexao = ConexaoComBanco.getConnection();
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+
+        try {
+            stmt = conexao.prepareStatement(
+                    "SELECT * FROM peca WHERE quantidade_estoque < 10 ORDER BY quantidade_estoque"
+            );
+            rs = stmt.executeQuery();
+
+            DecimalFormat df = new DecimalFormat("#,##0.00");
+
+            while (rs.next()) {
+                Peca peca = new Peca(
+                        rs.getString("id_peca"),
+                        rs.getString("nome_peca"),
+                        df.format(rs.getDouble("preco_unitario")),
+                        rs.getString("quantidade_estoque")
+                );
+                listaPecas.add(peca);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro ao listar estoque baixo: " + e.getMessage());
+        } finally {
+            ConexaoComBanco.fechaConexao(conexao, stmt, rs);
+        }
+
+        return listaPecas;
+    }
 }
