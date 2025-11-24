@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -22,20 +23,28 @@
     </top>
 
     <center>
-        <VBox spacing="20" style="-fx-padding: 30; -fx-background-color: white;">
+        <VBox spacing="30" style="-fx-padding: 30; -fx-background-color: white;">
 
-            <Label text="Resumo Geral" style="-fx-font-size: 18; -fx-font-weight: bold;"/>
+            <Label style="-fx-font-size: 18; -fx-font-weight: bold;" text="Resumo Geral" />
 
             <HBox spacing="20">
-                <VBox style="-fx-background-color: #27ae60; -fx-padding: 20; -fx-background-radius: 10;" prefWidth="250">
-                    <Label text="Faturamento Total" textFill="WHITE" style="-fx-font-size: 14;"/>
-                    <Label fx:id="lblFaturamento" text="R$ 0,00" textFill="WHITE" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+                <VBox prefWidth="250" style="-fx-background-color: #27ae60; -fx-padding: 20; -fx-background-radius: 10;">
+                    <Label style="-fx-font-size: 14;" text="Faturamento Total" textFill="WHITE" />
+                    <Label fx:id="lblFaturamento" style="-fx-font-size: 24; -fx-font-weight: bold;" text="R$ 0,00" textFill="WHITE" />
                 </VBox>
 
-                <VBox style="-fx-background-color: #2980b9; -fx-padding: 20; -fx-background-radius: 10;" prefWidth="250">
-                    <Label text="Ordens Finalizadas" textFill="WHITE" style="-fx-font-size: 14;"/>
-                    <Label fx:id="lblOrdensFinalizadas" text="0" textFill="WHITE" style="-fx-font-size: 24; -fx-font-weight: bold;"/>
+                <VBox prefWidth="250" style="-fx-background-color: #2980b9; -fx-padding: 20; -fx-background-radius: 10;">
+                    <Label style="-fx-font-size: 14;" text="Ordens Finalizadas" textFill="WHITE" />
+                    <Label fx:id="lblOrdensFinalizadas" style="-fx-font-size: 24; -fx-font-weight: bold;" text="0" textFill="WHITE" />
                 </VBox>
+            </HBox>
+
+            <Region prefHeight="20.0" />
+
+            <Label style="-fx-font-size: 18; -fx-font-weight: bold;" text="Exportar Dados" />
+
+            <HBox spacing="20">
+                <Button onAction="#gerarPDF" prefHeight="50.0" prefWidth="250.0" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold;" text="📄 Baixar Relatório em PDF" />
             </HBox>
 
         </VBox>

@@ -13,9 +13,13 @@ public class RelatorioDAO {
         Connection conexao = ConexaoComBanco.getConnection();
         double total = 0;
         try {
-            PreparedStatement stmt = conexao.prepareStatement("SELECT SUM(valor) as total FROM pagamento WHERE status_pagamento = 'Pago'");
+            PreparedStatement stmt = conexao.prepareStatement(
+                    "SELECT SUM(valor_total) as total FROM pagamento WHERE status_pagamento = 'Pago'"
+            );
             ResultSet rs = stmt.executeQuery();
-            if (rs.next()) total = rs.getDouble("total");
+            if (rs.next()) {
+                total = rs.getDouble("total");
+            }
         } catch (SQLException e) {
             System.out.println("Erro ao obter faturamento: " + e.getMessage());
         } finally {
@@ -39,7 +43,6 @@ public class RelatorioDAO {
         return total;
     }
 
-    // Metodo para pegar os dados detalhados para o PDF
     public static ObservableList<OrdemDeServico> listarOrdensParaRelatorio() {
         ObservableList<OrdemDeServico> lista = FXCollections.observableArrayList();
         Connection conexao = ConexaoComBanco.getConnection();
