@@ -8,10 +8,14 @@ import Templates.Alertas;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -112,6 +116,21 @@ public class DetalhesOrdemServicoController {
             } else {
                 alertas.mostrarErro("Erro ao atualizar status!");
             }
+    }
+    @FXML
+    void realizarPagamento(ActionEvent event) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/Pagamento.fxml"));
+        Parent root = loader.load();
+
+        PagamentoController controller = loader.getController();
+        controller.carregarDados(ordemAtual);
+
+        Stage stage = new Stage();
+        stage.setTitle("Pagamento");
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
+
+        carregarDadosOrdem(ordemAtual);
     }
 
     @FXML
