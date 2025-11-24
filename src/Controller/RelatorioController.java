@@ -40,7 +40,6 @@ public class RelatorioController implements Initializable {
     @FXML
     void gerarPDF(ActionEvent event) {
         try {
-            // Busca dados do banco
             ObservableList<OrdemDeServico> ordens = RelatorioDAO.listarOrdensParaRelatorio();
 
             if (ordens.isEmpty()) {
@@ -48,13 +47,12 @@ public class RelatorioController implements Initializable {
                 return;
             }
 
-            // Escolhe onde salvar o arquivo
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Salvar Relatório");
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Arquivos PDF", "*.pdf"));
             fileChooser.setInitialFileName("Relatorio_Oficina_" + System.currentTimeMillis() + ".pdf");
 
-            // Pega o stage atual para abrir a janela
+
             Stage stage = (Stage) lblFaturamento.getScene().getWindow();
             File file = fileChooser.showSaveDialog(stage);
 

@@ -1,12 +1,15 @@
 package DB;
 
 import java.sql.*;
-
+import io.github.cdimascio.dotenv.Dotenv;
 public class ConexaoComBanco {
-    private static final String DRIVE = "com.mysql.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://localhost:3306/oficina";
-    private static final String USER = "root";
-    private static final String PASS = "Matheusgolo21102005";
+
+    private static final Dotenv dotenv = Dotenv.load();
+
+    private static final String DRIVE = "com.mysql.cj.jdbc.Driver";
+    private static final String URL = dotenv.get("DB_URL");
+    private static final String USER = dotenv.get("DB_USER");
+    private static final String PASS = dotenv.get("DB_PASSWORD");
 
     // metodo de conexão com o banco de dados
     public static Connection getConnection(){

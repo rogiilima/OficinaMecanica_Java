@@ -1,7 +1,6 @@
 package DB;
 
 import Model.Cliente;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
