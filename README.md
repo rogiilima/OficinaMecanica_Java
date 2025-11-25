@@ -6,7 +6,7 @@ Sistema desktop completo desenvolvido em **Java** com **JavaFX** e **MySQL** par
 
 ## 📋 Índice
 
-- [Sobre o Projeto](/#sobre-o-projeto)
+- [Sobre o Projeto](#Sobre-o-projeto)
 - [Funcionalidades](#funcionalidades)
 - [Tecnologias Utilizadas](#tecnologias-utilizadas)
 - [Requisitos do Sistema](#requisitos-do-sistema)
